@@ -48,6 +48,8 @@ require('term2').setup({
 ```
 
 ## Usage
+### After install
+Restart your neovim
 
 ### Commands
 - `:Term2` - Toggle the terminal window
