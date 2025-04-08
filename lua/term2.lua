@@ -31,18 +31,8 @@ function M.open()
 
     vim.api.nvim_win_set_buf(M.state.terminal_winnr, M.state.terminal_bufnr)
 
-    local has_job = false
-    local ok, channel = pcall(function()
-        return vim.api.nvim_buf_get_var(M.state.terminal_bufnr, 'terminal_job_id')
-    end)
-
-    if ok and channel then
-        has_job = true
-    end
-
-    if not has_job then
-        vim.fn.termopen(M.config.shell)
-    end
+    -- Simply always open a new terminal - simplest fix
+    vim.fn.termopen(M.config.shell)
 
     vim.cmd('startinsert')
 
