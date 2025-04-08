@@ -31,7 +31,16 @@ function M.open()
 
     vim.api.nvim_win_set_buf(M.state.terminal_winnr, M.state.terminal_bufnr)
 
-    if not vim.api.nvim_buf_get_option(M.state.terminal_bufnr, 'terminal_job_id') then
+    local has_job = false
+    local ok, channel = pcall(function()
+        return vim.api.nvim_buf_get_var(M.state.terminal_bufnr, 'terminal_job_id')
+    end)
+
+    if ok and channel then
+        has_job = true
+    end
+
+    if not has_job then
         vim.fn.termopen(M.config.shell)
     end
 
@@ -70,7 +79,7 @@ end
 function M.setup(opts)
     M.config = vim.tbl_deep_extend("force", M.config, opts or {})
 
-    vim.api.nvim_create_user_command("TermUp", function()
+    vim.api.nvim_create_user_command("Term2", function()
         M.toggle()
     end, {})
 
