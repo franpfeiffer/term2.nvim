@@ -12,43 +12,43 @@ M.state = {
 }
 
 function M.open()
-    if M.state.terminal_bufnr and vim.api.nvim_buf_is_valid(M.state.terminal_bufnr) then
-        if M.state.terminal_winnr and vim.api.nvim_win_is_valid(M.state.terminal_winnr) then
-            vim.api.nvim_set_current_win(M.state.terminal_winnr)
-            return
-        end
-    else
+    local is_new_terminal = false
+
+    if not M.state.terminal_bufnr or not vim.api.nvim_buf_is_valid(M.state.terminal_bufnr) then
         M.state.terminal_bufnr = vim.api.nvim_create_buf(false, true)
-        vim.api.nvim_buf_set_option(M.state.terminal_bufnr, 'buftype', 'terminal')
-        vim.api.nvim_buf_set_option(M.state.terminal_bufnr, 'buflisted', false)
+        is_new_terminal = true
     end
 
-    vim.cmd('split')
-    vim.cmd('wincmd K')
-    vim.cmd('resize ' .. M.config.height)
+    if M.state.terminal_winnr and vim.api.nvim_win_is_valid(M.state.terminal_winnr) then
+        vim.api.nvim_set_current_win(M.state.terminal_winnr)
+    else
+        vim.cmd('split')
+        vim.cmd('wincmd K')
+        vim.cmd('resize ' .. M.config.height)
 
-    M.state.terminal_winnr = vim.api.nvim_get_current_win()
+        M.state.terminal_winnr = vim.api.nvim_get_current_win()
+        vim.api.nvim_win_set_buf(M.state.terminal_winnr, M.state.terminal_bufnr)
+    end
 
-    vim.api.nvim_win_set_buf(M.state.terminal_winnr, M.state.terminal_bufnr)
+    if is_new_terminal then
+        vim.fn.termopen(M.config.shell)
 
-    -- Simply always open a new terminal - simplest fix
-    vim.fn.termopen(M.config.shell)
+        vim.api.nvim_create_autocmd("BufLeave", {
+            buffer = M.state.terminal_bufnr,
+            callback = function()
+                vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-\\><C-n>', true, true, true), 'n', false)
+            end
+        })
+
+        vim.api.nvim_buf_set_keymap(M.state.terminal_bufnr, 't', '<Esc>',
+            '<C-\\><C-n>', {noremap = true, silent = true})
+        vim.api.nvim_buf_set_keymap(M.state.terminal_bufnr, 't', '<C-q>',
+            '<C-\\><C-n>:lua require("term2").close()<CR>', {noremap = true, silent = true})
+        vim.api.nvim_buf_set_keymap(M.state.terminal_bufnr, 'n', 'q',
+            ':lua require("term2").close()<CR>', {noremap = true, silent = true})
+    end
 
     vim.cmd('startinsert')
-
-    vim.api.nvim_create_autocmd("BufLeave", {
-        buffer = M.state.terminal_bufnr,
-        callback = function()
-            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-\\><C-n>', true, true, true), 'n', false)
-        end
-    })
-
-    vim.api.nvim_buf_set_keymap(M.state.terminal_bufnr, 't', '<Esc>',
-        '<C-\\><C-n>', {noremap = true, silent = true})
-    vim.api.nvim_buf_set_keymap(M.state.terminal_bufnr, 't', '<C-q>',
-        '<C-\\><C-n>:lua require("term2").close()<CR>', {noremap = true, silent = true})
-    vim.api.nvim_buf_set_keymap(M.state.terminal_bufnr, 'n', 'q',
-        ':lua require("term2").close()<CR>', {noremap = true, silent = true})
 end
 
 function M.close()
