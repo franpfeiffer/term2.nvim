@@ -1,7 +1,7 @@
 local M = {}
 
 M.config = {
-    width = 15,
+    width = 12,
     shell = vim.o.shell,
     keymap = nil
 }
@@ -24,7 +24,7 @@ function M.open()
     else
         vim.cmd('vsplit')
         vim.cmd('wincmd L')
-        vim.cmd('resize ' .. M.config.width)
+        vim.cmd('vertical resize ' .. M.config.width)
 
         M.state.terminal_winnr = vim.api.nvim_get_current_win()
         vim.api.nvim_win_set_buf(M.state.terminal_winnr, M.state.terminal_bufnr)
