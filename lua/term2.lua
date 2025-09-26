@@ -23,7 +23,7 @@ function M.open()
         vim.api.nvim_set_current_win(M.state.terminal_winnr)
     else
         vim.cmd('split')
-        vim.cmd('wincmd K')
+        vim.cmd('wincmd L')
         vim.cmd('resize ' .. M.config.height)
 
         M.state.terminal_winnr = vim.api.nvim_get_current_win()
