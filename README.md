@@ -16,7 +16,8 @@ Term2 is a Neovim plugin that opens a terminal window above the current buffer, 
 use {
   'franpfeiffer/term2.nvim',
   config = function()
-    require('term2').setup({
+    require('term2').setup({a
+      width = 35,
       keymap = '<leader>t'
     })
   end
@@ -29,6 +30,7 @@ use {
   'franpfeiffer/term2.nvim',
   config = function()
     require('term2').setup({
+      width = 35,
       keymap = '<leader>t'
     })
   end
@@ -39,6 +41,7 @@ use {
 ```lua
 require('term2').setup({
   shell = vim.o.shell,  -- Shell to use (defaults to Neovim's shell setting)
+  width = 35, -- The size of the pane
   keymap = '<leader>t'  -- Keymap to toggle terminal (optional)
 })
 ```
