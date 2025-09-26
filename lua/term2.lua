@@ -1,7 +1,6 @@
 local M = {}
 
 M.config = {
-    height = 15,
     shell = vim.o.shell,
     keymap = nil
 }
@@ -24,7 +23,6 @@ function M.open()
     else
         vim.cmd('split')
         vim.cmd('wincmd L')
-        vim.cmd('resize ' .. M.config.height)
 
         M.state.terminal_winnr = vim.api.nvim_get_current_win()
         vim.api.nvim_win_set_buf(M.state.terminal_winnr, M.state.terminal_bufnr)

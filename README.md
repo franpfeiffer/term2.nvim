@@ -7,7 +7,6 @@ Term2 is a Neovim plugin that opens a terminal window above the current buffer, 
 - Opens terminal in a split window above the current buffer
 - Toggles terminal visibility with a single command
 - Preserves terminal state between toggles
-- Configurable height and keybinding
 - Automatically exits insert mode when leaving terminal
 
 ## Installation
@@ -18,7 +17,6 @@ use {
   'franpfeiffer/term2.nvim',
   config = function()
     require('term2').setup({
-      height = 15,
       keymap = '<leader>t'
     })
   end
@@ -31,7 +29,6 @@ use {
   'franpfeiffer/term2.nvim',
   config = function()
     require('term2').setup({
-      height = 15,
       keymap = '<leader>t'
     })
   end
@@ -41,7 +38,6 @@ use {
 ## Configuration Options
 ```lua
 require('term2').setup({
-  height = 15,          -- Height of the terminal window (in lines)
   shell = vim.o.shell,  -- Shell to use (defaults to Neovim's shell setting)
   keymap = '<leader>t'  -- Keymap to toggle terminal (optional)
 })
