@@ -1,7 +1,7 @@
 local M = {}
 
 M.config = {
-    width = 12,
+    width = 25,
     shell = vim.o.shell,
     keymap = nil
 }
