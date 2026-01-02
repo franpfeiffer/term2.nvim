@@ -4,7 +4,7 @@
 Term2 is a Neovim plugin that opens a terminal window above the current buffer, similar to how fugitive's display.
 
 ## Features
-- Opens terminal in a split window above the current buffer
+- Opens terminal in a split window next to the current buffer
 - Toggles terminal visibility with a single command
 - Preserves terminal state between toggles
 - Automatically exits insert mode when leaving terminal
@@ -55,6 +55,8 @@ Restart your neovim
 
 ### Default Keymaps
 - `<leader>t` (if configured) - Toggle terminal window
+- `<C-l>` Make it smaller (l for less {less penis})
+- `<C-p>` Make it larger (p for penis {more penis})
 - `q` (in normal mode within terminal) - Close terminal window
 - `<C-q>` (in terminal mode) - Exit terminal mode and close terminal window
 - `<Esc>` (in terminal mode) - Exit terminal mode
