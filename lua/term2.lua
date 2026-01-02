@@ -1,7 +1,7 @@
 local M = {}
 
 M.config = {
-    width = 35,
+    width = 48,
     shell = vim.o.shell,
     keymap = nil
 }
@@ -46,6 +46,10 @@ function M.open()
             '<C-\\><C-n>:lua require("term2").close()<CR>', {noremap = true, silent = true})
         vim.api.nvim_buf_set_keymap(M.state.terminal_bufnr, 'n', 'q',
             ':lua require("term2").close()<CR>', {noremap = true, silent = true})
+        vim.api.nvim_buf_set_keymap(M.state.terminal_bufnr, 't', '<C-p>',
+            '<C-\\><C-n>:lua require("term2").increase_width()<CR>i', {noremap = true, silent = true})
+        vim.api.nvim_buf_set_keymap(M.state.terminal_bufnr, 't', '<C-l>',
+            '<C-\\><C-n>:lua require("term2").decrease_width()<CR>i', {noremap = true, silent = true})
     end
 
     vim.cmd('startinsert')
@@ -78,6 +82,29 @@ function M.setup(opts)
     end
 
     return M
+end
+
+# to resize the terminal window manually use :lua require("term2").resize(10)
+function M.resize(width)
+    if M.state.terminal_winnr and vim.api.nvim_win_is_valid(M.state.terminal_winnr) then
+        vim.api.nvim_win_set_width(M.state.terminal_winnr, width)
+    end
+end
+
+function M.increase_width(amount)
+    amount = amount or 5
+    if M.state.terminal_winnr and vim.api.nvim_win_is_valid(M.state.terminal_winnr) then
+        local current_width = vim.api.nvim_win_get_width(M.state.terminal_winnr)
+        vim.api.nvim_win_set_width(M.state.terminal_winnr, current_width + amount)
+    end
+end
+
+function M.decrease_width(amount)
+    amount = amount or 5
+    if M.state.terminal_winnr and vim.api.nvim_win_is_valid(M.state.terminal_winnr) then
+        local current_width = vim.api.nvim_win_get_width(M.state.terminal_winnr)
+        vim.api.nvim_win_set_width(M.state.terminal_winnr, math.max(10, current_width - amount))
+    end
 end
 
 return M
