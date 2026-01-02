@@ -84,7 +84,6 @@ function M.setup(opts)
     return M
 end
 
-# to resize the terminal window manually use :lua require("term2").resize(10)
 function M.resize(width)
     if M.state.terminal_winnr and vim.api.nvim_win_is_valid(M.state.terminal_winnr) then
         vim.api.nvim_win_set_width(M.state.terminal_winnr, width)
