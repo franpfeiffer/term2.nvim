@@ -46,9 +46,9 @@ function M.open()
             '<C-\\><C-n>:lua require("term2").close()<CR>', {noremap = true, silent = true})
         vim.api.nvim_buf_set_keymap(M.state.terminal_bufnr, 'n', 'q',
             ':lua require("term2").close()<CR>', {noremap = true, silent = true})
-        vim.api.nvim_buf_set_keymap(M.state.terminal_bufnr, 't', '<C-Right>',
-            '<C-\\><C-n>:lua require("term2").increase_width()<CR>i', {noremap = true, silent = true})
         vim.api.nvim_buf_set_keymap(M.state.terminal_bufnr, 't', '<C-Left>',
+            '<C-\\><C-n>:lua require("term2").increase_width()<CR>i', {noremap = true, silent = true})
+        vim.api.nvim_buf_set_keymap(M.state.terminal_bufnr, 't', '<C-Right>',
             '<C-\\><C-n>:lua require("term2").decrease_width()<CR>i', {noremap = true, silent = true})
     end
 
