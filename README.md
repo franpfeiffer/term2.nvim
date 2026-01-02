@@ -55,8 +55,8 @@ Restart your neovim
 
 ### Default Keymaps
 - `<leader>t` (if configured) - Toggle terminal window
-- `<C-Left>` Make it smaller (l for less {less penis})
-- `<C-Right>` Make it larger (p for penis {more penis})
+- `<C-Right>` Make it smaller (l for less {less penis})
+- `<C-Left>` Make it larger (p for penis {more penis})
 - `q` (in normal mode within terminal) - Close terminal window
 - `<C-q>` (in terminal mode) - Exit terminal mode and close terminal window
 - `<Esc>` (in terminal mode) - Exit terminal mode
